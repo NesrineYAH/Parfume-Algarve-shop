@@ -20,6 +20,20 @@ const products = [
     price: 59.99,
     image: "/images/ciel.jpg",
   },
+  {
+    _id: "4",
+    name: "Parfum Élégance",
+    description: "Un parfum floral et raffiné.",
+    price: 59.99,
+    image: "https://via.placeholder.com/300x200",
+  },
+  {
+    _id: "5",
+    name: "Boisé Intense",
+    description: "Un parfum boisé aux notes profondes.",
+    price: 79.99,
+    image: "https://via.placeholder.com/300x200",
+  },
 ];
 
 module.exports = products;
