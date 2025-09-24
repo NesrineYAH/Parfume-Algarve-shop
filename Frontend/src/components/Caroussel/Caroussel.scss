@@ -1,0 +1,50 @@
+.carousel {
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    position: relative;
+    max-height: 500px;
+    max-width: 96%;
+}
+
+.img_carousel {
+    width: 450px;
+    height: 400px;
+    background-color: transparent;
+}
+
+.thumbs {
+    display: none !important;
+}
+
+.img_carousel img {
+    width: 450px;
+    height: 400px;
+    object-fit: cover
+}
+
+.control-arrow {
+    display: none !important;
+}
+
+@media screen and (min-width: 768px) and (max-width:1170px) {
+    .img_carousel {
+        width: 90%;
+    }
+
+    .carousel {
+        margin: 0 5px;
+    }
+
+    @media screen and (min-width: 1171px) and (max-width:16000px) {
+        .carousel {
+            margin: 0 5px;
+            transform: scale(1);
+
+        }
+
+        .img_carousel {
+            width: 90%;
+        }
+    }
+}

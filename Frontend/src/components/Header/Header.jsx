@@ -32,7 +32,7 @@ const Header = () => {
       </ul>
 
       {/* Icônes */}
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-4 icons">
         <Home className="w-6 h-6 cursor-pointer hover:text-pink-500 icone" />
         <Heart className="w-6 h-6 cursor-pointer hover:text-pink-500 icone" />
         <ShoppingCart className="w-6 h-6 cursor-pointer hover:text-pink-500 icone" />

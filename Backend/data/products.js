@@ -21,14 +21,14 @@ const products = [
     image: "../images/eclat_de_rose.webp",
   },
   {
-    _id: "4",
+    id: "4",
     name: "Parfum Élégance",
     description: "Un parfum floral et raffiné.",
     price: 59.99,
     image: "../images/Parfume-elégance.jpg",
   },
   {
-    _id: "5",
+    id: "5",
     name: "Boisé Intense",
     description: "Un parfum boisé aux notes profondes.",
     price: 79.99,
