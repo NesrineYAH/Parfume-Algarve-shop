@@ -30,6 +30,7 @@ export default function Home() {
           <div key={product._id} className="product-card">
             <img src={product.image} alt={product.name} />
             <h2>{product.name}</h2>
+            <img className="imgParfum" src={product.image} alt ='Image de Parfum'/>
             <p className="description">{product.description}</p>
             <p className="price">{product.price} €</p>
             <button>Ajouter au panier</button>

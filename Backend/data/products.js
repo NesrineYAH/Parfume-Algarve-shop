@@ -18,7 +18,7 @@ const products = [
     name: "Ciel d'Azur",
     description: "Un parfum léger et frais aux senteurs marines.",
     price: 59.99,
-    image: "../images/intense.webp",
+    image: "../images/eclat_de_rose.webp",
   },
   {
     _id: "4",
@@ -32,7 +32,7 @@ const products = [
     name: "Boisé Intense",
     description: "Un parfum boisé aux notes profondes.",
     price: 79.99,
-    image: "",
+    image: "../images/intense.webp",
   },
 ];
 
