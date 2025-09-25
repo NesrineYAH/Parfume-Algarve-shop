@@ -26,9 +26,6 @@ export default function Home() {
       <h1 className="title">Boutique de Parfums</h1>
 
 
-
-      
-
       <div className="products-grid">
         {products.map((product) => (
           <div key={product._id} className="product-card">
@@ -45,9 +42,12 @@ export default function Home() {
 }
 */
 // pages/Home.jsx
+
 import React, { useState, useEffect } from "react";
 import SearchBar from "../../src/components/searchBar/searchBar";
 import { useNavigate } from "react-router-dom";
+import "./Home.scss";
+
 
 const Home = () => {
   const [products, setProducts] = useState([]);
@@ -76,26 +76,25 @@ const Home = () => {
   };
 
   return (
-    <div className="p-4">
+    <div className="home">
       <SearchBar onSearch={handleSearch} />
 
-      <div className="grid grid-cols-2 gap-4 mt-4 md:grid-cols-3">
+      <div className="grid">
         {filtered.map((product) => (
           <div
             key={product.id}
             // className="p-3 transition border rounded-lg shadow cursor-pointer hover:shadow-md card"
-                       className="card"
-
+            className="card"
             onClick={() => handleClickProduct(product.id)}
           >
-            <img
-              src={product.image}
+            <img  src={product.image}
               alt={product.name}
-              className="object-cover w-full h-40 rounded-md card_img"
+              className="card_img"
             />
-            <h3 className="mt-2 font-semibold">{product.name}</h3>
-            <p className="text-sm text-gray-600">{product.description}</p>
-            <p className="mt-1 font-bold text-pink-600">{product.price} €</p>
+            {/* object-cover w-full h-40 rounded-md  */}
+            <h3 className="">{product.name}</h3>
+            <p className="">{product.description}</p>
+            <p className="">{product.price} €</p>
           </div>
           
         ))}

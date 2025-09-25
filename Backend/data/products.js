@@ -25,7 +25,7 @@ const products = [
     name: "Parfum Élégance",
     description: "Un parfum floral et raffiné.",
     price: 59.99,
-    image: "../images/Parfume-elégance.jpg",
+    image: "../images/orient.webp",
   },
   {
     id: "5",

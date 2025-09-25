@@ -11,7 +11,7 @@ const Caroussel = () => {
     const fetchProducts = async () => {
       try {
         // ⚠️ Ici, remplace par ton API backend, ex: "http://localhost:5000/api/products"
-        const res = await fetch("http://localhost:5000/api/products"); 
+        const res = await fetch("/data/products.json"); 
         if (res.ok) {
           const data = await res.json();
           setProducts(data);
@@ -39,7 +39,7 @@ const Caroussel = () => {
       showIndicators={false}
       showStatus={false}
     >
-      {product.pictures.map((pic, index) => (
+      {product.images.map((pic, index) => (
         <div key={index} className="img_carousel">
           <img src={pic} alt={`photo ${index}`} />
         </div>
