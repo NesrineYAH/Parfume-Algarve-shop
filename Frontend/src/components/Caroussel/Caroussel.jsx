@@ -2,9 +2,10 @@ import React, { useState, useEffect } from "react";
 import { Carousel } from "react-responsive-carousel";
 import { useParams } from "react-router-dom";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
+// import "./Caroussel.scss";
 
 const Caroussel = () => {
-  const { id } = useParams(); //useParams() renvoie toujours une chaîne de caractères (string).
+  const { id } = useParams(); //useParams() renvoie toujours une chaîne de caractères (string). Mais tes p.id venant du backend sont probablement des nombres (number).
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
@@ -22,7 +23,8 @@ const Caroussel = () => {
     fetchProducts();
   }, []);
 
-  const product = products.find((p) => p.id === id);
+  //const product = products.find((p) => p.id === id);
+const product = products.find((p) => String(p.id) === id);
 
   if (!product) {
     return <p>Produit introuvable</p>;
@@ -38,7 +40,7 @@ const Caroussel = () => {
       showIndicators={false}
       showStatus={false}
     >
-      {product.images.map((pic, index) => (
+      {product.pictures?.map((pic, index) => (
         <div key={index} className="img_carousel">
           <img src={pic} alt={`photo ${index}`} />
         </div>
