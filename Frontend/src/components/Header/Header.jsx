@@ -20,9 +20,11 @@ const Header = () => {
         <li className="cursor-pointer hover:text-pink-500">
           CALENDRIERS DE L&apos;AVENT
         </li>
-        <li className="cursor-pointer hover:text-pink-500">
-          NOUVEAUTÉS &amp; TENDANCES
-        </li>
+          <a href="/Home"><li className="cursor-pointer hover:text-pink-500">Acceuil
+       </li>
+
+
+          </a>
         <li className="cursor-pointer hover:text-pink-500">Parfum</li>
         <li className="cursor-pointer hover:text-pink-500">Maquillage</li>
         <li className="cursor-pointer hover:text-pink-500">Soin visage</li>

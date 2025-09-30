@@ -1,6 +1,6 @@
 import "./App.scss";
 import Headers from "./components/Header/Header.jsx";
-import  Home  from "../page/Home/Home.jsx";
+import  Home  from "./page/Home/Home.jsx";
 import Caroussel from "./components/Caroussel/Caroussel.jsx";
 
 function App() {
@@ -14,7 +14,14 @@ function App() {
 
         <Home />
     <Caroussel />
-
+    
+    <BrowserRouter>
+    
+      <Routes>
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+      </Routes>
+    </BrowserRouter>
    
       </div>
     </>
