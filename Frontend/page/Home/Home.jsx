@@ -47,6 +47,7 @@ import React, { useState, useEffect } from "react";
 import SearchBar from "../../src/components/searchBar/searchBar";
 import { useNavigate } from "react-router-dom";
 import "./Home.scss";
+import { Link } from "react-router-dom";
 
 
 const Home = () => {
@@ -56,7 +57,7 @@ const Home = () => {
 
   useEffect(() => {
     const fetchProducts = async () => {
-      const res = await fetch("/data/products.json");
+      const res = await fetch("http://localhost:5000/data/products");
       const data = await res.json();
       setProducts(data);
       setFiltered(data);
@@ -72,18 +73,17 @@ const Home = () => {
   };
 
   const handleClickProduct = (id) => {
-    navigate(`/product/${id}`); // redirige vers la page produit (carrousel)
+    navigate(`/Product/${id}`); // redirige vers la page produit (carrousel)
   };
 
   return (
     <div className="home">
-      <SearchBar onSearch={handleSearch} />
+      <SearchBar onSearch={handleSearch} className="searchBar" />
 
       <div className="grid">
         {filtered.map((product) => (
           <div
             key={product.id}
-            // className="p-3 transition border rounded-lg shadow cursor-pointer hover:shadow-md card"
             className="card"
             onClick={() => handleClickProduct(product.id)}
           >
@@ -91,10 +91,15 @@ const Home = () => {
               alt={product.name}
               className="card_img"
             />
-            {/* object-cover w-full h-40 rounded-md  */}
+          <Link to={`/Product/${product.id}`} target="_blank" className="btn_text">
+              </Link> 
+
+
+            
             <h3 className="">{product.name}</h3>
             <p className="">{product.description}</p>
             <p className="">{product.price} €</p>
+            <button className="btn" >Ajouter au panier</button>
           </div>
           
         ))}

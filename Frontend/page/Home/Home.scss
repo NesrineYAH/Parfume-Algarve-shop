@@ -9,6 +9,11 @@
         color: #333;
     }
 
+    .searchBar {
+        height: 50px;
+        width: 800px;
+    }
+
     .grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));

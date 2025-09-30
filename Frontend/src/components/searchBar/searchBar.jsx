@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Search } from "lucide-react"; // icône loupe
+import "../../../page/Home/Home.scss";
+
 
 const SearchBar = ({ onSearch }) => {
   const [query, setQuery] = useState("");
@@ -11,7 +13,7 @@ const SearchBar = ({ onSearch }) => {
   };
 
   return (
-    <div className="flex items-center w-full max-w-md p-2 bg-white border shadow-sm rounded-2xl">
+    <div className="flex items-center w-full max-w-md p-2 bg-white border shadow-sm rounded-2xl searchBar">
       <Search className="mr-2 text-gray-500" size={20} />
       <input
         type="text"
