@@ -1,9 +1,18 @@
 import React from "react";
 import Logo from "../../assets/Logo-Parfumerie.JPG";
 import { User, ShoppingCart, Heart, Home, Bell } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./Header.scss";
 
+
 const Header = () => {
+    const navigate = useNavigate();
+
+    const handleClick = () => {
+    navigate("/auth");
+  };
+
   return (
     <header className="flex items-center justify-between p-4 bg-white shadow-md">
       {/* Logo */}
@@ -22,8 +31,6 @@ const Header = () => {
         </li>
           <a href="/Home"><li className="cursor-pointer hover:text-pink-500">Acceuil
        </li>
-
-
           </a>
         <li className="cursor-pointer hover:text-pink-500">Parfum</li>
         <li className="cursor-pointer hover:text-pink-500">Maquillage</li>
@@ -38,7 +45,10 @@ const Header = () => {
         <Home className="w-6 h-6 cursor-pointer hover:text-pink-500 icone" />
         <Heart className="w-6 h-6 cursor-pointer hover:text-pink-500 icone" />
         <ShoppingCart className="w-6 h-6 cursor-pointer hover:text-pink-500 icone" />
+        <Link to="/auth" >
         <User className="w-6 h-6 cursor-pointer hover:text-pink-500 icone" />
+        </Link>
+        
         <Bell className="w-6 h-6 cursor-pointer hover:text-pink-500 icone" />
       </div>
     </header>

@@ -2,6 +2,11 @@ import "./App.scss";
 import Headers from "./components/Header/Header.jsx";
 import  Home  from "./page/Home/Home.jsx";
 import Caroussel from "./components/Caroussel/Caroussel.jsx";
+import { Routes, Route } from 'react-router-dom';
+import Register from "./components/Register/Register.jsx";
+import Login from "./components/Login/Login.jsx";
+import Auth from "./page/Auth/Auth.jsx";
+
 
 function App() {
 
@@ -15,13 +20,17 @@ function App() {
         <Home />
     <Caroussel />
     
-    <BrowserRouter>
-    
+ 
       <Routes>
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/auth" element={<Auth />} />
       </Routes>
-    </BrowserRouter>
+
+
+
+
+ 
    
       </div>
     </>
