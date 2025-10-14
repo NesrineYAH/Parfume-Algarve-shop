@@ -8,7 +8,8 @@ app.use(express.json());
 
 // Routes
 app.use("/data/products", require("./routes/products"));
-app.use("/data/users", require("./routes/users"));
+app.use("/data/users", require("./routes/users/Register"));
+app.use("/data/users", require("./routes/users/Login"));
 
 app.get("/", (req, res) => {
   res.send("Backend en marche 🚀");
