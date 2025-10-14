@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");
 const User = require("../Model/userModel"); // ton modèle Mongoose
+const crypto = require("crypto");
+const sendVerificationEmail = require("../utils/emailService"); // fonction pour envoyer des emails
 
 // GET /users - liste des utilisateurs
 router.get("/", async (req, res) => {
@@ -37,7 +39,6 @@ router.post("/register", async (req, res) => {
     });
 
     await newUser.save();
-    res.status(201).json({ message: "Utilisateur créé avec succès" });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
