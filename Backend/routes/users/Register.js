@@ -2,11 +2,8 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");
 const crypto = require("crypto");
-const User = require("../models/userModel");
+const User = require("../../Model/userModel");
 const { sendVerificationEmail } = require("../../utils/mailer");
-
-
-
 
 // POST /users/register - inscription
 router.post("/", async (req, res) => {
