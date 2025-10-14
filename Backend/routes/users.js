@@ -26,10 +26,14 @@ router.post("/register", async (req, res) => {
     // Hash du mot de passe
     const hashedPassword = await bcrypt.hash(password, 10);
 
+    // 1️⃣ Créer un token unique
+    const verificationToken = crypto.randomBytes(32).toString("hex");
+
     const newUser = new User({
       username,
       email,
       password: hashedPassword,
+      verificationToken,
     });
 
     await newUser.save();
@@ -37,6 +41,15 @@ router.post("/register", async (req, res) => {
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
+
+  //15/10/2025
+
+  // 3️⃣ Envoyer l'email de confirmation
+  sendVerificationEmail(email, verificationToken);
+
+  res
+    .status(201)
+    .json({ message: "Inscription réussie, vérifiez votre email !" });
 });
 
 // POST /users/login - connexion

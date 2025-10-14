@@ -3,8 +3,7 @@ import Headers from "./components/Header/Header.jsx";
 import  Home  from "./page/Home/Home.jsx";
 import Caroussel from "./components/Caroussel/Caroussel.jsx";
 import { Routes, Route } from 'react-router-dom';
-import Register from "./components/Register/Register.jsx";
-import Login from "./components/Login/Login.jsx";
+
 import Auth from "./page/Auth/Auth.jsx";
 
 
@@ -22,9 +21,8 @@ function App() {
     
  
       <Routes>
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/auth" element={<Auth />} />
+             <Route path="/" element={<Home />} />
+          <Route path="/auth" element={<Auth />} />
       </Routes>
 
 
@@ -38,3 +36,7 @@ function App() {
 }
 
 export default App;
+ /*
+ <Route path="/register" element={<Register />} />
+<Route path="/login" element={<Login />} />
+        */ 

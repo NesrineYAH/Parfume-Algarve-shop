@@ -10,7 +10,7 @@ const Header = () => {
     const navigate = useNavigate();
 
     const handleClick = () => {
-    navigate("/auth");
+    navigate("/Auth");
   };
 
   return (
@@ -19,7 +19,7 @@ const Header = () => {
       <div className="flex items-center gap-4">
         <img
           src={Logo}
-          className="w-20 h-auto logo"
+          className="logo"
           alt="Logo Parfume Algarve"
         />
       </div>
@@ -45,8 +45,8 @@ const Header = () => {
         <Home className="w-6 h-6 cursor-pointer hover:text-pink-500 icone" />
         <Heart className="w-6 h-6 cursor-pointer hover:text-pink-500 icone" />
         <ShoppingCart className="w-6 h-6 cursor-pointer hover:text-pink-500 icone" />
-        <Link to="/auth" >
-        <User className="w-6 h-6 cursor-pointer hover:text-pink-500 icone" />
+        <Link to="Auth" >
+        <User  onClick={handleClick}  className="icone" />
         </Link>
         
         <Bell className="w-6 h-6 cursor-pointer hover:text-pink-500 icone" />
