@@ -6,7 +6,7 @@ const User = require("../../Model/userModel");
 const { sendVerificationEmail } = require("../../utils/mailer");
 
 // POST /users/register - inscription
-router.post("/", async (req, res) => {
+router.post("/register", async (req, res) => {
   try {
     const { username, email, password } = req.body;
 
