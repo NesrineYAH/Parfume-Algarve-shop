@@ -7,6 +7,7 @@ const { sendVerificationEmail } = require("../../configuration/mailer");
 
 // POST /users/register - inscription
 router.post("/register", async (req, res) => {
+  
   try {
     const { username, email, password } = req.body;
 
