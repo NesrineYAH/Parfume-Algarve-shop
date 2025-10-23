@@ -37,26 +37,19 @@ const Home = () => {
 
       <div className="grid">
         {filtered.map((product) => (
-          <div
-            key={product.id}
-            className="card"
-            onClick={() => handleClickProduct(product.id)}
-          >
-            <img  src={product.image}
-              alt={product.name}
-              className="card_img"
-            />
-          <Link to={`/Product/${product.id}`} target="_blank" className="btn_text">
-              </Link> 
+       <div
+  key={product.id}
+  className="card"
+  onClick={() => handleClickProduct(product._id)}
+>
+  <img src={product.image} alt={product.name} className="card_img" />
+  <Link to={`/Product/${product._id}`} target="_blank" className="btn_text"></Link>
+  <h3>{product.name}</h3>
+  <p>{product.description}</p>
+  <p>{product.price} €</p>
+  <button className="btn">Ajouter au panier</button>
+</div>
 
-
-            
-            <h3 className="">{product.name}</h3>
-            <p className="">{product.description}</p>
-            <p className="">{product.price} €</p>
-            <button className="btn" >Ajouter au panier</button>
-          </div>
-          
         ))}
       </div>
     </div>

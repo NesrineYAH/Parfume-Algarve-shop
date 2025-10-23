@@ -14,10 +14,9 @@ function Auth() {
   const handleSubmit = async (e) => {
     e.preventDefault();
       console.log("➡️ Formulaire soumis :", formData); // 👈 ajoute ça
-
-    const url = isLogin
-      ? "http://localhost:5000/data/users/login"
-      : "http://localhost:5000/data/users/register";
+const url = isLogin
+  ? "http://localhost:5000/auth/login"
+  : "http://localhost:5000/auth/register";
 
     try {
       const res = await fetch(url, {

@@ -1,3 +1,6 @@
+import React, { useState, useEffect } from "react";
+
+
 export default function Parfum({ parfum }) {
   return (
     <div className="p-4 border rounded-lg shadow">
