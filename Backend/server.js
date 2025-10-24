@@ -12,22 +12,10 @@ const PORT = process.env.PORT || 5000;
 app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 app.use(express.json());
 
-// 🔹 Routes principales
-/*
-app.use("/data/products", require("./routes/products"));
-app.use("/data/auth", require("./routes/auth/Login"));
-app.use("/data/auth", require("./routes/auth/Register"));
-*/
-
 // 🔹 Import des routes
 const productRoutes = require("./routes/products");
-// const loginRoutes = require("./routes/auth/Login");
-// const registerRoutes = require("./routes/auth/Register");
-
 // 🔹 Utilisation des routes
 app.use("/data/products", productRoutes);
-//app.use("/data/auth", loginRoutes);
-//app.use("/data/auth", registerRoutes);
 app.use("/data/auth", require("./routes/RoutesUsers"));
 
 // 🔹 Route de test

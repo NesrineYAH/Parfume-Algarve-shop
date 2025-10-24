@@ -8,52 +8,34 @@ const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[\w!@#$%^&*]{8,32}$/;
 
 const signatureToken = process.env.CLE_TOKEN;
 
-// 🔹 Enregistrement d’un utilisateur
+// Backend/Controller/user.js
+const authService = require("../data/auth/authService.js");
+
 exports.Register = async (req, res) => {
   try {
-    if (!emailRegex.test(req.body.email)) {
-      return res.status(401).json({ message: "Email non valide" });
-    }
-
-    if (!passwordRegex.test(req.body.password)) {
-      return res.status(401).json({ message: "Mot de passe non valide" });
-    }
-
-    const hash = await bcrypt.hash(req.body.password, 10);
-    const user = new User({
-      email: req.body.email,
-      password: hash,
-    });
-
-    await user.save();
-    res.status(201).json({ message: "Utilisateur créé !" });
+    const { email, password, username } = req.body;
+    const result = await authService.registerUser(email, password, username);
+    res.status(201).json(result);
   } catch (error) {
-    res.status(500).json({ error });
+    if (error.message.includes("existe") || error.message.includes("valide")) {
+      return res.status(400).json({ error: error.message });
+    }
+    res.status(500).json({ error: error.message });
   }
 };
 
-// 🔹 Connexion d’un utilisateur
 exports.login = async (req, res) => {
   try {
-    const user = await User.findOne({ email: req.body.email });
-    if (!user)
-      return res
-        .status(401)
-        .json({ message: "Paire login/mot de passe incorrecte" });
-
-    const valid = await bcrypt.compare(req.body.password, user.password);
-    if (!valid)
-      return res
-        .status(401)
-        .json({ message: "Paire login/mot de passe incorrecte" });
-
-    res.status(200).json({
-      userId: user._id,
-      token: jwt.sign({ userId: user._id }, signatureToken, {
-        expiresIn: "24h",
-      }),
-    });
+    const { email, password } = req.body;
+    const result = await authService.loginUser(email, password);
+    res.status(200).json(result);
   } catch (error) {
-    res.status(500).json({ error });
+    if (
+      error.message.includes("Mot de passe") ||
+      error.message.includes("Utilisateur")
+    ) {
+      return res.status(401).json({ error: error.message }); // Mauvais identifiants
+    }
+    res.status(500).json({ error: error.message });
   }
 };

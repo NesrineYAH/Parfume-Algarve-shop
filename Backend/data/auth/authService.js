@@ -2,50 +2,49 @@
 const User = require("../../Model/userModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+require("dotenv").config();
 
-// Enregistrement d'un utilisateur
-const registerUser = async (userData) => {
-  const { username, email, password } = userData;
-
-  // Vérifier si l'utilisateur existe déjà
+const registerUser = async (email, password, username) => {
+  // Vérifier si l'email existe déjà
   const existingUser = await User.findOne({ email });
   if (existingUser) {
-    throw new Error("User already exists");
+    throw new Error("Cet utilisateur existe déjà");
   }
 
-  // Hasher le mot de passe
+  // Hachage du mot de passe
   const hashedPassword = await bcrypt.hash(password, 10);
 
-  // Créer et enregistrer l'utilisateur
-  const user = new User({ username, email, password: hashedPassword });
+  // Création et sauvegarde du nouvel utilisateur avec username
+  const user = new User({ email, password: hashedPassword, username });
   await user.save();
 
-  return { message: "User registered successfully", userId: user._id };
+  return {
+    message: "Utilisateur enregistré avec succès",
+    userId: user._id,
+  };
 };
 
-// Connexion d'un utilisateur
-const loginUser = async (userData) => {
-  const { email, password } = userData;
-
+const loginUser = async (email, password) => {
   const user = await User.findOne({ email });
   if (!user) {
-    throw new Error("User not found");
+    throw new Error("Utilisateur non trouvé");
   }
 
-  const isPasswordValid = await bcrypt.compare(password, user.password);
-  if (!isPasswordValid) {
-    throw new Error("Invalid credentials");
+  const validPassword = await bcrypt.compare(password, user.password);
+  if (!validPassword) {
+    throw new Error("Mot de passe incorrect");
   }
 
-  // Générer un token JWT
-  const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-    expiresIn: "1h",
+  // Génération du token JWT
+  const token = jwt.sign({ userId: user._id }, process.env.CLE_TOKEN, {
+    expiresIn: "24h",
   });
 
-  return { message: "Login successful", token, userId: user._id };
+  return {
+    message: "Connexion réussie",
+    token,
+    userId: user._id,
+  };
 };
 
-module.exports = {
-  registerUser,
-  loginUser,
-};
+module.exports = { registerUser, loginUser };
