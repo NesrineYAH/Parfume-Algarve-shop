@@ -1,41 +1,51 @@
 import React, { useState } from "react";
 import "./Auth.scss";
+import { loginUser, registerUser } from "../../../services/authService";
 
 function Auth() {
   const [isLogin, setIsLogin] = useState(true);
-  const [formData, setFormData] = useState({ username: "", email: "", password: "" });
+  const [formData, setFormData] = useState({
+    username: "",
+    email: "",
+    password: "",
+  });
+  const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
-  // Gestion des champs
+  // 🔹 Gestion des champs
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // Envoie du formulaire
+  // 🔹 Soumission du formulaire
   const handleSubmit = async (e) => {
     e.preventDefault();
-      console.log("➡️ Formulaire soumis :", formData); // 👈 ajoute ça
-const url = isLogin
-  ? "http://localhost:5000/auth/login"
-  : "http://localhost:5000/auth/register";
+    setLoading(true);
+    setErrorMessage("");
 
     try {
-      const res = await fetch(url, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
+      const data = isLogin
+        ? await loginUser(formData)
+        : await registerUser(formData);
 
-      const data = await res.json();
-      console.log("Réponse du serveur :", data);
+      console.log("✅ Réponse du serveur :", data);
+
       alert(isLogin ? "Connexion réussie ✅" : "Inscription réussie 🎉");
+
+      // Optionnel : redirection après connexion
+      // window.location.href = "/";
+
     } catch (error) {
-      console.error("Erreur :", error);
+      console.error("❌ Erreur :", error);
+      setErrorMessage(error.message || "Une erreur est survenue");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div className="auth-container">
-      <div className="auth-card"> 
+      <div className="auth-card">
         <h2>{isLogin ? "Connexion" : "Inscription"}</h2>
 
         <form onSubmit={handleSubmit}>
@@ -43,18 +53,20 @@ const url = isLogin
             <input
               type="text"
               name="username"
-              placeholder="Nom"
+              placeholder="Nom d'utilisateur"
               value={formData.username}
               onChange={handleChange}
+              required
             />
           )}
 
           <input
             type="email"
             name="email"
-            placeholder="Email"
+            placeholder="Adresse e-mail"
             value={formData.email}
             onChange={handleChange}
+            required
           />
 
           <input
@@ -63,16 +75,26 @@ const url = isLogin
             placeholder="Mot de passe"
             value={formData.password}
             onChange={handleChange}
+            required
           />
 
-          <button type="submit">
-            {isLogin ? "Se connecter" : "Créer un compte"}
+          <button type="submit" disabled={loading}>
+            {loading
+              ? "Veuillez patienter..."
+              : isLogin
+              ? "Se connecter"
+              : "Créer un compte"}
           </button>
         </form>
 
+        {errorMessage && <p className="error">{errorMessage}</p>}
+
         <p>
           {isLogin ? "Pas encore de compte ?" : "Déjà inscrit ?"}{" "}
-          <span onClick={() => setIsLogin(!isLogin)} style={{ cursor: "pointer", color: "blue" }}>
+          <span
+            onClick={() => setIsLogin(!isLogin)}
+            style={{ cursor: "pointer", color: "blue" }}
+          >
             {isLogin ? "S’inscrire" : "Se connecter"}
           </span>
         </p>

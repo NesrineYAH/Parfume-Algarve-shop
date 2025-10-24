@@ -1,15 +1,14 @@
+// backend/routes/users.js
 const express = require("express");
 const router = express.Router();
-const User = require("../Model/userModel"); // ton modèle Mongoose
 
-// GET /users - liste des utilisateurs
-router.get("/", async (req, res) => {
-  try {
-    const users = await User.find().select("-password"); // ne pas renvoyer le password
-    res.json(users);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-});
+// Import du contrôleur utilisateur
+const userController = require("../Controller/user.js");
+
+// 🔹 Route d'inscription (Register)
+router.post("/register", userController.Register);
+
+// 🔹 Route de connexion (Login)
+router.post("/login", userController.login);
 
 module.exports = router;

@@ -1,10 +1,9 @@
+/*
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");
 const User = require("../../Model/userModel");
-const { sendVerificationEmail } = require("../../configuration/mailer");
 
-// POST /users/login - connexion
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -29,3 +28,4 @@ router.post("/login", async (req, res) => {
   }
 });
 module.exports = router;
+*/

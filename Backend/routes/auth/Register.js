@@ -1,3 +1,4 @@
+/*
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");
@@ -5,9 +6,7 @@ const crypto = require("crypto");
 const User = require("../../Model/userModel");
 const { sendVerificationEmail } = require("../../configuration/mailer");
 
-// POST /users/register - inscription
 router.post("/register", async (req, res) => {
-  
   try {
     const { username, email, password } = req.body;
 
@@ -38,3 +37,4 @@ router.post("/register", async (req, res) => {
 });
 
 module.exports = router;
+*/
