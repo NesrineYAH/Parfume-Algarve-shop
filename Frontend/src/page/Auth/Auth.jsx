@@ -1,6 +1,7 @@
+// frontend/src/components/Auth/Auth.jsx
 import React, { useState } from "react";
 import "./Auth.scss";
-import { loginUser, registerUser } from "../../../services/authService"; // 🔹 Nouveau chemin simplifié
+import { loginUser, registerUser } from "../../../services/authService";
 
 function Auth() {
   const [isLogin, setIsLogin] = useState(true);
@@ -12,7 +13,7 @@ function Auth() {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
-  // 🔹 Gestion des champs
+  // 🔹 Gestion des champs du formulaire
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -25,15 +26,16 @@ function Auth() {
 
     try {
       let data;
+
       if (isLogin) {
-        // Connexion
+        // 🔹 Connexion
         data = await loginUser({
           email: formData.email,
           password: formData.password,
         });
         alert("Connexion réussie ✅");
       } else {
-        // Inscription
+        // 🔹 Inscription
         data = await registerUser({
           email: formData.email,
           password: formData.password,
@@ -44,22 +46,18 @@ function Auth() {
 
       console.log("✅ Réponse du serveur :", data);
 
-      // Optionnel : stocker le token si login
+      // 🔹 Stockage du token si login
       if (data.token) {
         localStorage.setItem("token", data.token);
       }
 
-      // Optionnel : redirection après succès
+      // 🔹 Optionnel : redirection après succès
       // window.location.href = "/";
 
     } catch (error) {
       console.error("❌ Erreur :", error);
-      const message =
-        error.response?.data?.error ||
-        error.response?.data?.message ||
-        error.message ||
-        "Une erreur est survenue";
-      setErrorMessage(message);
+      // 🔹 Avec fetch, error.response n'existe pas, on utilise error.message
+      setErrorMessage(error.message || "Une erreur est survenue");
     } finally {
       setLoading(false);
     }
