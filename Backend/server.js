@@ -14,9 +14,10 @@ app.use(express.json());
 
 // 🔹 Import des routes
 const productRoutes = require("./routes/products");
+userRoutes = require("./routes/RoutesUsers");
 // 🔹 Utilisation des routes
 app.use("/data/products", productRoutes);
-app.use("/data/auth", require("./routes/RoutesUsers"));
+app.use("/data/users", userRoutes);
 
 // 🔹 Route de test
 app.get("/", (req, res) => {

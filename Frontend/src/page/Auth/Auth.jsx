@@ -4,174 +4,139 @@ import "./Auth.scss";
 import { loginUser, registerUser } from "../../../services/authService";
 
 function Auth() {
-  const [isLogin, setIsLogin] = useState(true);
+  const [isLogin, setIsLogin] = useState(true); // true = login, false = register
   const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-    username: "",
+    username: '',
+    email: '',
+    password: '',
+    confirmPassword: ''
   });
   const [loading, setLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
 
-  // 🔹 Gestion des champs du formulaire
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  // 🔹 Soumission du formulaire
- /* 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setErrorMessage("");
 
     try {
-      let data;
+      // Validation basique
+      if (!isLogin && formData.password !== formData.confirmPassword) {
+        alert("Les mots de passe ne correspondent pas");
+        return;
+      }
 
+      let result;
+      
       if (isLogin) {
-        // 🔹 Connexion
-        data = await loginUser({
+        // Connexion
+        result = await loginUser({
           email: formData.email,
-          password: formData.password,
+          password: formData.password
         });
-        alert("Connexion réussie ✅");
+        console.log('Connexion réussie:', result);
       } else {
-        // 🔹 Inscription
-        data = await registerUser({
-          email: formData.email,
-          password: formData.password,
+        // Inscription
+        result = await registerUser({
           username: formData.username,
+          email: formData.email,
+          password: formData.password
         });
-        alert("Inscription réussie 🎉");
+        console.log('Inscription réussie:', result);
       }
 
-      console.log("✅ Réponse du serveur :", data);
-
-      // 🔹 Stockage du token si login
-      if (data.token) {
-        localStorage.setItem("token", data.token);
-      }
-
-      // 🔹 Optionnel : redirection après succès
-      // window.location.href = "/";
+      // Redirection après succès
+      window.location.href = '/dashboard';
 
     } catch (error) {
-      console.error("❌ Erreur :", error);
-      // 🔹 Avec fetch, error.response n'existe pas, on utilise error.message
-      setErrorMessage(error.message || "Une erreur est survenue");
+      console.error('Erreur:', error.message);
+      alert(error.message);
     } finally {
       setLoading(false);
     }
   };
-*/
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  setLoading(true);
-  setErrorMessage("");
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
 
-  // 🔹 Validation côté frontend avant envoi
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[\w!@#$%^&*]{8,32}$/;
-
-  if (!isLogin) { // uniquement pour l'inscription
-    if (!emailRegex.test(formData.email.trim())) {
-      setErrorMessage("Email non valide");
-      setLoading(false);
-      return;
-    }
-    if (!passwordRegex.test(formData.password.trim())) {
-      setErrorMessage("Mot de passe non valide");
-      setLoading(false);
-      return;
-    }
-  }
-
-  try {
-    let data;
-
-    const email = formData.email.trim().toLowerCase();
-    const password = formData.password.trim();
-    const username = formData.username.trim();
-
-
-
-
-    
-    if (isLogin) {
-      data = await loginUser({ email, password });
-      alert("Connexion réussie ✅");
-    } else {
-      data = await registerUser({ email, password, username });
-      alert("Inscription réussie 🎉");
-    }
-
-    console.log("✅ Réponse du serveur :", data);
-
-    if (data.token) localStorage.setItem("token", data.token);
-
-  } catch (error) {
-    console.error("❌ Erreur :", error);
-    setErrorMessage(error.message || "Une erreur est survenue");
-  } finally {
-    setLoading(false);
-  }
-};
-
+  const switchMode = () => {
+    setIsLogin(!isLogin);
+    // Réinitialiser le formulaire
+    setFormData({
+      username: '',
+      email: '',
+      password: '',
+      confirmPassword: ''
+    });
+  };
 
   return (
     <div className="auth-container">
-      <div className="auth-card">
-        <h2>{isLogin ? "Connexion" : "Inscription"}</h2>
-
+      <div className="auth-form">
+        <h2>{isLogin ? 'Connexion' : 'Inscription'}</h2>
+        
         <form onSubmit={handleSubmit}>
+          {/* Champ username seulement pour l'inscription */}
           {!isLogin && (
+            <div className="form-group">
+              <input
+                type="text"
+                name="username"
+                placeholder="Nom d'utilisateur"
+                value={formData.username}
+                onChange={handleChange}
+                required={!isLogin}
+              />
+            </div>
+          )}
+
+          <div className="form-group">
             <input
-              type="text"
-              name="username"
-              placeholder="Nom d'utilisateur"
-              value={formData.username}
+              type="email"
+              name="email"
+              placeholder="Email"
+              value={formData.email}
               onChange={handleChange}
               required
             />
+          </div>
+
+          <div className="form-group">
+            <input
+              type="password"
+              name="password"
+              placeholder="Mot de passe"
+              value={formData.password}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          {/* Champ confirmation mot de passe seulement pour l'inscription */}
+          {!isLogin && (
+            <div className="form-group">
+              <input
+                type="password"
+                name="confirmPassword"
+                placeholder="Confirmer le mot de passe"
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                required={!isLogin}
+              />
+            </div>
           )}
 
-          <input
-            type="email"
-            name="email"
-            placeholder="Adresse e-mail"
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
-
-          <input
-            type="password"
-            name="password"
-            placeholder="Mot de passe"
-            value={formData.password}
-            onChange={handleChange}
-            required
-          />
-
           <button type="submit" disabled={loading}>
-            {loading
-              ? "Veuillez patienter..."
-              : isLogin
-              ? "Se connecter"
-              : "Créer un compte"}
+            {loading ? 'Chargement...' : (isLogin ? 'Se connecter' : "S'inscrire")}
           </button>
         </form>
 
-        {errorMessage && <p className="error">{errorMessage}</p>}
-
-        <p>
-          {isLogin ? "Pas encore de compte ?" : "Déjà inscrit ?"}{" "}
-          <span
-            onClick={() => setIsLogin(!isLogin)}
-            style={{ cursor: "pointer", color: "blue" }}
-          >
-            {isLogin ? "S’inscrire" : "Se connecter"}
+        <p className="switch-mode">
+          {isLogin ? "Pas de compte ? " : "Déjà un compte ? "}
+          <span onClick={switchMode} className="switch-link">
+            {isLogin ? "S'inscrire" : "Se connecter"}
           </span>
         </p>
       </div>
@@ -180,3 +145,4 @@ const handleSubmit = async (e) => {
 }
 
 export default Auth;
+
