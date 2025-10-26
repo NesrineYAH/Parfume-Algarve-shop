@@ -12,3 +12,4 @@ mongoose
   .catch((e) => {
     console.error("Erreur de connexion à MongoDB :", e);
   });
+module.exports = mongoose;

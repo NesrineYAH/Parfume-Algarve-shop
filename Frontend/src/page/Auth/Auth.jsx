@@ -19,6 +19,7 @@ function Auth() {
   };
 
   // 🔹 Soumission du formulaire
+ /* 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -62,6 +63,61 @@ function Auth() {
       setLoading(false);
     }
   };
+*/
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setLoading(true);
+  setErrorMessage("");
+
+  // 🔹 Validation côté frontend avant envoi
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[\w!@#$%^&*]{8,32}$/;
+
+  if (!isLogin) { // uniquement pour l'inscription
+    if (!emailRegex.test(formData.email.trim())) {
+      setErrorMessage("Email non valide");
+      setLoading(false);
+      return;
+    }
+    if (!passwordRegex.test(formData.password.trim())) {
+      setErrorMessage("Mot de passe non valide");
+      setLoading(false);
+      return;
+    }
+  }
+
+  try {
+    let data;
+
+    const email = formData.email.trim().toLowerCase();
+    const password = formData.password.trim();
+    const username = formData.username.trim();
+
+
+
+
+    
+    if (isLogin) {
+      data = await loginUser({ email, password });
+      alert("Connexion réussie ✅");
+    } else {
+      data = await registerUser({ email, password, username });
+      alert("Inscription réussie 🎉");
+    }
+
+    console.log("✅ Réponse du serveur :", data);
+
+    if (data.token) localStorage.setItem("token", data.token);
+
+  } catch (error) {
+    console.error("❌ Erreur :", error);
+    setErrorMessage(error.message || "Une erreur est survenue");
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   return (
     <div className="auth-container">
